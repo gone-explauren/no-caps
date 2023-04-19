@@ -1,15 +1,16 @@
 'use strict';
 
-const eventEmitter = require('../eventPool');
+// const eventEmitter = require('../../eventPool');
 
-function handlePickup(payload) {
-  console.log(`DRIVER: picked up ${payload.orderId}`);
-
-  eventEmitter.emit('in-transit', payload);
-
-  console.log(`DRIVER: delivered ${payload.orderId}`);
-
-  eventEmitter.emit('delivered', payload);
+function reportInTransit(payload) {
+  console.log(`DRIVER: picked up order ${payload.orderId}`);
 }
 
-module.exports = handlePickup;
+function reportDelivered(payload) {
+  console.log(`DRIVER: delivered order ${payload.orderId}`);
+}
+
+module.exports = {
+  reportInTransit,
+  reportDelivered
+};
