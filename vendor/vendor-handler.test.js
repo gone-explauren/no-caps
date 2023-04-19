@@ -1,6 +1,6 @@
 'use strict';
 
-const { handleDelivered, generatePayload } = require('./handlers');
+const { handleDelivered, generatePayload } = require('./handler');
 
 let payload = null;
 
