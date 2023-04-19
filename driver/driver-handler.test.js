@@ -1,19 +1,22 @@
 'use strict';
 
-const handlePickup = require('./handler');
-const eventEmitter = require('../eventPool');
+const { reportInTransit, reportDelivered } = require('./handler.js');
 
-jest.mock('../eventPool', () => ({
-  on: jest.fn(),
-  emit: jest.fn()
-}));
+describe('Testing driver functions', () => {
 
-describe('Testing the driver functionality', () => {
-  test('Should console log the payload, and call event emitter with proper event names', () => {
+  test('Can report order in transit', () => {
+    let payload = {};
     console.log = jest.fn();
-
-    handlePickup({orderId: 'test'});
-    expect(console.log).toHaveBeenCalledTimes(2);
-    expect(eventEmitter.emit).toHaveBeenCalledTimes(2);
+    reportInTransit(payload);
+    expect(console.log).toHaveBeenCalled();
   });
+
+
+  test('Can report order delivered', () => {
+    let payload = {};
+    console.log = jest.fn();
+    reportDelivered(payload);
+    expect(console.log).toHaveBeenCalled();
+  });
+
 });
