@@ -6,6 +6,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const http = require('http');
+const MessageQueue = require('./MessageQueue');
 
 const cors = require('cors');
 app.use(cors);
@@ -16,6 +17,9 @@ const { Server } = require('socket.io');
 const PORT = process.env.PORT || 3001;
 
 const io = new Server(server);
+
+let pickupInbox = new MessageQueue();
+let deliveredInbox = new MessageQueue();
 
 // server.listen(PORT, () => {
 //   console.log(`express listening on ${PORT}`);
@@ -96,5 +100,40 @@ capsServer.on('connection', (socket) => {
   });
 
   // capsServer.to('room-Id').emit('pickup', payload);
+
+});
+
+messages.on('connection', (socket) => {
+
+  // client send a message
+  socket.on('send', (payload) => {
+    let recipientMessages = inbox.read(payload.recipientId);
+    if(recipientMessages) {
+      recipientMessages.store(payload.messageId, payload);
+    } else {
+      let recipientMessages = new MessageQueue();
+      recipientMessages.store(payload.messageId, payload);
+      inbox.store(payload.recipientId,recipientMessages);
+    }
+    console.log(inbox);
+    messages.emit('send', payload);
+  });
+
+  socket.on('getMessages', (payload) => {
+    let message = pickupInbox.read(payload.recipientId);
+    // send notification
+    socket.emit('getMessages', message);
+  });
+
+  socket.on('received', (payload) => {
+    try {
+      let recipientMessages = deliveredInbox.read(payload.recipientId);
+      let message = recipientMessages.remove(payload.messageId);
+      console.log(message);
+      socket.emit('confirm-received', message);
+    } catch(e) {
+      socket.emit('received-error', 'Could not remove message');
+    }
+  });
 
 });
