@@ -17,27 +17,43 @@ const PORT = process.env.PORT || 3001;
 
 const io = new Server(server);
 
-server.listen(PORT, () => {
-  console.log(`express listening on ${PORT}`);
-});
-
+// server.listen(PORT, () => {
+//   console.log(`express listening on ${PORT}`);
+// });
 
 // start server
 io.on('connection', (socket) => {
   console.log('client has connected to server', socket.id);
 
-	// accessible emitters:
+	// socket.on('join-group', (payload)=>{
+	// 	// console.log('room joined!', payload);
+	// 	socket.join(payload['store'])
+	// });
+
+	// // accessible emitters:
   // socket.on('event', (payload) => {
 
-  // emit back to same client that emitted event
+  // // emit back to same client that emitted event
   // socket.emit('event', payload);
 
-  // notify entire server, including original emitter
+  // // notify entire server, including original emitter
   // io.emit('event', payload);
 
-  // event broadcast syntax
-  // emits to all clients except original emitter
+  // // event broadcast syntax
+  // // emits to all clients except original emitter
   // socket.broadcast.emit('event', payload);
+
+	// // ex:
+	// socket.broadcast.emit(eventPool[0], payload);
+	// console.log(
+	// `Event: ${eventPool[0]},
+	// time: ${new Date(Date.now()).toDateString()},
+	// payload:{
+	// 	store: ${payload['store']},
+	// 	orderId: ${payload['orderId']},
+	// 	customer: ${payload['customer']},
+	// 	address: ${payload['address']},
+	// } `)
 
   // });
 });
@@ -61,7 +77,7 @@ capsServer.on('connection', (socket) => {
   // console.log('client connected to CAPS namespace ', socket.id);
 
   socket.on('join-room', (payload) => {
-    socket.join(payload.roomId);
+    socket.join(payload.store);
   });
 
   socket.on('pickup', (payload) => {

@@ -19,11 +19,16 @@ function generatePayload() {
 //   address: 'Schmittfort, LA',
 // }
 
+// function sendPickup(socket, payload) {
+// 	// console.log(emit)
+// 	socket.emit('pickup', payload)
+// }
+
 function handleDelivered(payload) {
-  console.log(`Thank ypu for your order, ${payload.customer}!`);
+  console.log(`VENDOR: Thank you for delivering order ${payload.orderId} to ${payload.customer}`);
 }
 
 module.exports = {
   generatePayload,
-  handleDelivered,
-}
+  handleDelivered
+};
