@@ -12,8 +12,15 @@ function generatePayload() {
   }
 }
 
+// const payload = {
+//   store: '1-206-flowers',
+//   orderId: 'e3669048-7313-427b-b6cc-74010ca1f8f0',
+//   customer: 'Jamal Braun',
+//   address: 'Schmittfort, LA',
+// }
+
 function handleDelivered(payload) {
-  console.log(`Thanks, ${payload.customer}!`);
+  console.log(`Thank ypu for your order, ${payload.customer}!`);
 }
 
 module.exports = {
