@@ -1,17 +1,20 @@
 'use strict';
 
-require('dotenv').config();
+const { subscribe, trigger } = require('./client');
 
-const { io } = require('socket.io-client');
-const { reportInTransit, reportDelivered } = require('./driver-handler.js');
-const SERVER_URL = process.env.SERVER_URL || 'http://localhost:3001';
+subscribe('join-room', console.log);
+trigger('catchup-pickup', { store: '1-800-flowers'});
 
-let capsSocket = io(SERVER_URL + '/caps');
+subscribe('pickup', (payload) => {
+  console.log('Pickup received', payload);
 
-// respond to pickup
-capsSocket.on('pickup', (payload) => {
-  reportInTransit(payload);
-  capsSocket.emit('in-transit', payload);
-  reportDelivered(payload);
-  capsSocket.emit('delivered', payload);
+  trigger('join-room', payload);
+
+  setTimeout(() => {
+    trigger('in-transit', payload);
+  }, 2000);
+
+  setTimeout(() => {
+    trigger('delivered', payload);
+  }, 10000);
 });
