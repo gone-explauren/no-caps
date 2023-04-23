@@ -1,6 +1,7 @@
 'use strict';
 
-const { subscribe, trigger } = require('./client');
+const { subscribe, trigger } = require('../clients');
+const driver = require('./handler');
 
 subscribe('join-room', console.log);
 trigger('catchup-pickup', { store: '1-800-flowers'});
@@ -18,3 +19,7 @@ subscribe('pickup', (payload) => {
     trigger('delivered', payload);
   }, 10000);
 });
+
+driver.getAll();
+driver.pickupOrder();
+driver.droppedOff();
