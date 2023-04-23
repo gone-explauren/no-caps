@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for driver/handler.js</title>
+    <title>Code coverage report for vendors/flower-handler.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">driver</a> handler.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">vendors</a> flower-handler.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/14</span>
+                <span class='fraction'>5/10</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/7</span>
+                <span class='fraction'>1/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/14</span>
+                <span class='fraction'>5/10</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -95,29 +95,27 @@
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -132,36 +130,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
 &nbsp;
 const socket = require('../clients');
+const Chance = require('chance');
+const chance = new Chance();
 &nbsp;
-function pickupOrder() {
-  socket.on('pickup', <span class="fstat-no" title="function not covered" >(p</span>ayload) =&gt; {
-<span class="cstat-no" title="statement not covered" >    setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`Order Number: ${payload.orderId} picked up.`)</span>
-<span class="cstat-no" title="statement not covered" >      socket.emit('join', payload);</span>
-<span class="cstat-no" title="statement not covered" >      socket.emit('received', payload);</span>
-<span class="cstat-no" title="statement not covered" >      socket.emit('in-transit', payload);</span>
-    }, 2000)
+function <span class="fstat-no" title="function not covered" >newFlowerOrder(</span>storeName) {
+  let payload = <span class="cstat-no" title="statement not covered" >{</span>
+    store: storeName,
+    orderId: chance.guid(),
+    customer: chance.name(),
+    address: chance.address()
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  socket.emit('join', payload);</span>
+<span class="cstat-no" title="statement not covered" >  socket.emit('pickup', payload);</span>
+}
+&nbsp;
+function confirmedFlowerDelivery() {
+  socket.on('delivered', <span class="fstat-no" title="function not covered" >(p</span>ayload) =&gt; {
+<span class="cstat-no" title="statement not covered" >      console.log(`Order Number: ${payload.orderId} has been delivered!`);</span>
   })
 }
 &nbsp;
-function droppedOff() {
-  socket.on('in-transit', <span class="fstat-no" title="function not covered" >(p</span>ayload) =&gt; {
-<span class="cstat-no" title="statement not covered" >    getAll();</span>
-<span class="cstat-no" title="statement not covered" >    setTimeout(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(`Order Number: ${payload.orderId} delivered.`)</span>
-<span class="cstat-no" title="statement not covered" >      socket.emit('delivered', payload);</span>
-    }, 2000)
-  })
-}
-&nbsp;
-function <span class="fstat-no" title="function not covered" >getAll(</span>) {
-<span class="cstat-no" title="statement not covered" >  socket.emit('getAll', { queue: 'driveredQueue' } )</span>
+function <span class="fstat-no" title="function not covered" >getAllFlowerOrders(</span>) {
+<span class="cstat-no" title="statement not covered" >  socket.emit('getAll', { queue: 'pickupInbox' } )</span>
 }
 &nbsp;
 module.exports = {
-  pickupOrder,
-  droppedOff,
-  getAll
+  newFlowerOrder,
+  confirmedFlowerDelivery,
+  getAllFlowerOrders
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
